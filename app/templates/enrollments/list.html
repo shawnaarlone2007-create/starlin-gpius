@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}Enrollments - School Portal{% endblock %}
+{% block content %}
+<h2>Enrollments</h2>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Course</th>
+      <th>Student</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for e in enrollments %}
+    <tr>
+      <td>{{ e.course.title }}</td>
+      <td>{{ e.student.name }}</td>
+      <td>
+        {% if current_user.role != 'student' or e.student.id == current_user.id %}
+        <form method="post" action="/enrollments/remove" class="d-inline">
+          <input type="hidden" name="enrollment_id" value="{{ e.id }}">
+          <button class="btn btn-outline-danger btn-sm" type="submit">Remove</button>
+        </form>
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
