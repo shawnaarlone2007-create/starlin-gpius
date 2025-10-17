@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}Create Course - School Portal{% endblock %}
+{% block content %}
+<h2>Create Course</h2>
+<form method="post">
+  <div class="mb-3">
+    <label class="form-label">Title</label>
+    <input class="form-control" name="title" required>
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Description</label>
+    <textarea class="form-control" name="description"></textarea>
+  </div>
+  {% if current_user.role == 'admin' %}
+  <div class="mb-3">
+    <label class="form-label">Teacher</label>
+    <select class="form-select" name="teacher_id" required>
+      {% for t in teachers %}
+      <option value="{{ t.id }}">{{ t.name }} ({{ t.role }})</option>
+      {% endfor %}
+    </select>
+  </div>
+  {% endif %}
+  <button class="btn btn-success" type="submit">Create</button>
+</form>
+{% endblock %}
